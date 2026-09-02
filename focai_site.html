@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocAí — Aprenda no seu ritmo</title>
+<style>
+:root{
+  --pink:#d98cb3; --pink-light:#f8d7e8; --lilac:#e8ddf5;
+  --green:#ddeedb; --text:#3f3f46; --white:#fff; --bg:#fffafd;
+  --shadow:0 10px 30px rgba(80,50,80,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.5}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+header{position:sticky;top:0;z-index:10;background:rgba(255,250,253,.96);border-bottom:1px solid #f1e7ef;backdrop-filter:blur(10px)}
+.nav{max-width:1150px;margin:auto;padding:14px 22px;display:flex;align-items:center;gap:20px}
+.logo{font-size:24px;font-weight:800;color:var(--pink);margin-right:auto}
+.logo span{font-size:14px;color:#777;font-weight:500;margin-left:6px}
+.nav button{background:transparent;color:#555;padding:10px 12px;border-radius:12px}
+.nav button:hover,.nav button.active{background:var(--pink-light);color:#9d4f79}
+.profile{background:var(--pink)!important;color:white!important;border-radius:20px!important}
+main{max-width:1150px;margin:auto;padding:35px 22px 70px}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(135deg,var(--pink-light),var(--lilac));border-radius:28px;padding:42px;display:flex;justify-content:space-between;align-items:center;gap:25px;box-shadow:var(--shadow)}
+.hero h1{font-size:40px;margin:0 0 8px}.hero p{font-size:18px;margin:0 0 22px;max-width:600px}
+.primary{background:var(--pink);color:#fff;padding:13px 20px;border-radius:14px;font-weight:700}
+.secondary{background:#fff;color:#9d4f79;padding:13px 20px;border-radius:14px;font-weight:700;margin-left:8px}
+.hero-art{font-size:90px;background:rgba(255,255,255,.6);width:170px;height:170px;border-radius:50%;display:grid;place-items:center}
+h2{margin-top:38px} .subtitle{color:#777}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
+.card{background:#fff;border:1px solid #f0e7ee;border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.card h3{margin:8px 0}.icon{font-size:32px}.card button{margin-top:12px}
+.search{width:100%;padding:15px 18px;border:1px solid #eadde6;border-radius:14px;background:#fff;outline:none}
+.subjects{grid-template-columns:repeat(5,1fr)}
+.subject{padding:20px;text-align:center}.subject button{width:100%;padding:18px;border-radius:16px;background:#fff;border:1px solid #eee}
+.subject button:hover{background:var(--pink-light)}
+.focusbox{max-width:600px;margin:35px auto;text-align:center;background:#fff;border-radius:28px;padding:40px;box-shadow:var(--shadow)}
+.timer{font-size:76px;font-weight:800;color:#9d4f79;margin:20px 0}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.progress{height:14px;background:#eee5eb;border-radius:20px;overflow:hidden}.bar{height:100%;width:68%;background:var(--pink);border-radius:20px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.stat{text-align:center}.stat strong{font-size:30px;color:#9d4f79}
+.option{display:block;margin:10px 0;padding:14px;background:#fff;border:1px solid #eee0e9;border-radius:14px;text-align:left}
+.option.selected{background:var(--pink-light);border-color:var(--pink)}
+footer{text-align:center;color:#888;padding:30px}
+.toast{position:fixed;bottom:25px;right:25px;background:#3f3f46;color:#fff;padding:14px 18px;border-radius:14px;display:none}
+@media(max-width:800px){.nav{overflow:auto}.nav button{white-space:nowrap}.hero{padding:28px}.hero h1{font-size:30px}.hero-art{display:none}.grid,.subjects,.stats{grid-template-columns:1fr}.secondary{margin:8px 0 0}}
+</style>
+</head>
+<body>
+<header>
+<nav class="nav">
+<div class="logo">🌸 FocAí <span>Aprenda no seu ritmo.</span></div>
+<button class="active" onclick="showPage('home',this)">🏠 Início</button>
+<button onclick="showPage('learn',this)">📚 Aprender</button>
+<button onclick="showPage('focus',this)">⏱️ Foco</button>
+<button onclick="showPage('progress',this)">📊 Progresso</button>
+<button class="profile" onclick="toast('Área de perfil em desenvolvimento 💗')">👤 Perfil</button>
+</nav>
+</header>
+
+<main>
+<section id="home" class="page active">
+<div class="hero">
+<div><h1>Oi! Pronto para focar? 💗</h1>
+<p>Um espaço simples e acolhedor para estudar, organizar seus momentos de foco e aprender no seu próprio ritmo.</p>
+<button class="primary" onclick="showPage('learn')">Começar a aprender →</button>
+<button class="secondary" onclick="showPage('focus')">Hora do foco ⏱️</button></div>
+<div class="hero-art">🧠</div>
+</div>
+<h2>O que você quer fazer hoje?</h2>
+<div class="grid">
+<div class="card"><div class="icon">📚</div><h3>Aprender</h3><p>Conteúdos divididos em pequenas etapas, com explicações e atividades.</p><button class="primary" onclick="showPage('learn')">Explorar</button></div>
+<div class="card"><div class="icon">⏱️</div><h3>Hora do Foco</h3><p>Uma sessão de estudo com temporizador e modo sem distrações.</p><button class="primary" onclick="showPage('focus')">Começar</button></div>
+<div class="card"><div class="icon">🧩</div><h3>Desafio do Dia</h3><p>Uma atividade rápida para revisar conhecimentos.</p><button class="primary" onclick="quiz()">Fazer desafio</button></div>
+</div>
+<h2>🌷 Como você aprende melhor?</h2>
+<p class="subtitle">Escolha o que costuma ser mais difícil. O FocAí pode recomendar estratégias.</p>
+<div class="grid">
+<div class="card"><b>🎯 Manter o foco</b><p>Use sessões curtas e pausas planejadas.</p></div>
+<div class="card"><b>🧠 Memorizar</b><p>Experimente flashcards e revisões.</p></div>
+<div class="card"><b>📖 Entender textos</b><p>Divida textos em partes menores e destaque ideias principais.</p></div>
+</div>
+</section>
+
+<section id="learn" class="page">
+<h1>📚 Aprender</h1><p class="subtitle">Escolha uma matéria e avance passo a passo.</p>
+<input class="search" placeholder="🔍 O que você quer aprender?" oninput="filterSubjects(this.value)">
+<div class="grid subjects" id="subjects">
+<div class="subject" data-name="matematica"><button onclick="lesson('📐 Matemática')">📐<br><b>Matemática</b></button></div>
+<div class="subject" data-name="portugues"><button onclick="lesson('📖 Português')">📖<br><b>Português</b></button></div>
+<div class="subject" data-name="ciencias"><button onclick="lesson('🔬 Ciências')">🔬<br><b>Ciências</b></button></div>
+<div class="subject" data-name="geografia"><button onclick="lesson('🌎 Geografia')">🌎<br><b>Geografia</b></button></div>
+<div class="subject" data-name="historia"><button onclick="lesson('🏛️ História')">🏛️<br><b>História</b></button></div>
+</div>
+<div id="lesson" class="card" style="margin-top:25px;display:none"></div>
+</section>
+
+<section id="focus" class="page">
+<h1>⏱️ Hora do Foco</h1><p class="subtitle">Escolha um tempo confortável para sua sessão.</p>
+<div class="focusbox">
+<div>🌸 Sessão de foco</div><div class="timer" id="timer">25:00</div>
+<div class="controls">
+<button class="primary" onclick="startTimer()">▶️ Começar</button>
+<button class="secondary" onclick="pauseTimer()">⏸️ Pausar</button>
+<button class="secondary" onclick="resetTimer()">🔄 Reiniciar</button>
+</div>
+<p style="margin-top:22px">🔕 <b>Modo sem distrações:</b> mantenha apenas esta tarefa aberta.</p>
+</div>
+</section>
+
+<section id="progress" class="page">
+<h1>📊 Meu progresso</h1><p class="subtitle">Acompanhe sua evolução sem pressão. Cada pequeno passo conta! 🌱</p>
+<div class="stats">
+<div class="card stat"><div>📚</div><strong>12</strong><br>conteúdos estudados</div>
+<div class="card stat"><div>✅</div><strong>27</strong><br>atividades concluídas</div>
+<div class="card stat"><div>⏱️</div><strong id="focusStat">3h 20min</strong><br>tempo de foco</div>
+</div>
+<div class="card" style="margin-top:20px"><h3>Progresso da semana</h3><div class="progress"><div class="bar"></div></div><p>68% da sua meta semanal</p></div>
+<div class="card" style="margin-top:20px;background:var(--green)"><h3>🌱 Você está evoluindo!</h3><p>Continue estudando um pouquinho por vez. Não precisa fazer tudo de uma vez.</p></div>
+</section>
+</main>
+<footer>🌸 FocAí — Aprenda no seu ritmo. Foque do seu jeito.</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+ if(btn) btn.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+function filterSubjects(v){document.querySelectorAll('.subject').forEach(x=>x.style.display=x.dataset.name.includes(v.toLowerCase())?'block':'none')}
+function lesson(name){
+ let box=document.getElementById('lesson'); box.style.display='block';
+ box.innerHTML=`<h2>${name}</h2><p><b>Etapa 1 — Entenda o básico 💡</b></p><p>Comece pela ideia principal e depois avance para exemplos. O conteúdo foi dividido em pequenas partes para facilitar a compreensão.</p><p><b>Etapa 2 — Veja um exemplo ✨</b></p><p>Observe como o conceito funciona antes de tentar sozinho.</p><p><b>Etapa 3 — Tente você! 🧩</b></p><button class="primary" onclick="toast('Atividade iniciada! Boa sorte 💗')">Começar atividade</button>`;
+ box.scrollIntoView({behavior:'smooth'});
+}
+let seconds=1500, interval=null;
+function renderTimer(){let m=Math.floor(seconds/60),s=seconds%60;document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function startTimer(){if(interval)return;interval=setInterval(()=>{if(seconds>0){seconds--;renderTimer()}else{clearInterval(interval);interval=null;toast('Sessão concluída! Você conseguiu! 🌷')}},1000)}
+function pauseTimer(){clearInterval(interval);interval=null}
+function resetTimer(){pauseTimer();seconds=1500;renderTimer()}
+function quiz(){showPage('home');let answer=prompt('🧠 Desafio: qual é a melhor estratégia quando uma tarefa parece grande demais?\\n\\nA) Fazer tudo de uma vez\\nB) Dividir em pequenas etapas\\nC) Desistir');if(answer&&answer.toUpperCase()==='B')toast('Acertou! 🎉 Dividir a tarefa pode deixá-la mais fácil de começar.');else if(answer)toast('Quase! A resposta é B 💗')}
+renderTimer();
+</script>
+</body>
+</html>
